@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultation Bill</title>
+    <link rel="stylesheet" th:href="@{/css/billstyle.css}">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<div class="billing-container">
+    <h2><i class="fa-solid fa-stethoscope"></i> Consultation Bill</h2>
+
+    <form th:action="@{/saveBill}" th:object="${bill}" method="post">
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Patient Name</label>
+                <select th:field="*{patientName}" required>
+                    <option value="">-- Choose Patient --</option>
+                    <option th:each="p : ${patients}" 
+                            th:value="${p.firstName + ' ' + p.lastName}" 
+                            th:text="${p.firstName + ' ' + p.lastName}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Attending Doctor</label>
+                <input type="text" th:field="*{doctorName}" required placeholder="Enter Doctor Name">
+            </div>
+            <div class="form-group">
+                <label>Bill Type</label>
+                <input type="text" th:field="*{billType}" readonly>
+            </div>
+        </div>
+
+        <div class="item-section">
+            <h3>Add Items (Medicines/Services)</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Description</label>
+                    <select id="tempItemName">
+                        <option value="">-- Select --</option>
+                        <option th:each="m : ${medicines}" 
+                                th:value="${m.name}" 
+                                th:data-price="${m.pricePerUnit}" 
+                                th:text="${m.name}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" id="tempPrice" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Qty</label>
+                    <input type="number" id="tempQty" value="1" min="1">
+                </div>
+                <button type="button" onclick="addRow()" class="btn btn-add">ADD</button>
+            </div>
+
+            <table id="itemTable">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="total-section">
+            Grand Total: ₹ <span id="displayTotal">0.00</span>
+            <input type="hidden" th:field="*{totalAmount}" id="hiddenTotal">
+        </div>
+
+        <button type="submit" class="btn btn-save">GENERATE & SAVE BILL</button>
+    </form>
+</div>
+
+<script>
+    // Price Auto-fill
+    document.getElementById('tempItemName').addEventListener('change', function() {
+        const price = this.options[this.selectedIndex].getAttribute('data-price');
+        document.getElementById('tempPrice').value = price || 0;
+    });
+
+    function addRow() {
+        const name = document.getElementById('tempItemName').value;
+        const price = parseFloat(document.getElementById('tempPrice').value);
+        const qty = parseInt(document.getElementById('tempQty').value);
+
+        if(!name || qty <= 0) return alert("Please select an item!");
+
+        const tbody = document.querySelector('#itemTable tbody');
+        const row = tbody.insertRow();
+        const total = (price * qty).toFixed(2);
+
+        row.innerHTML = `
+            <td>${name} <input type="hidden" name="itemNames" value="${name}"></td>
+            <td>${price} <input type="hidden" name="itemPrices" value="${price}"></td>
+            <td>${qty} <input type="hidden" name="itemQtys" value="${qty}"></td>
+            <td class="row-total">${total}</td>
+            <td><i class="fa-solid fa-trash" style="color:red; cursor:pointer;" onclick="this.closest('tr').remove(); calculateTotal();"></i></td>
+        `;
+        calculateTotal();
+    }
+
+    function calculateTotal() {
+        let grand = 0;
+        document.querySelectorAll('.row-total').forEach(td => grand += parseFloat(td.innerText));
+        document.getElementById('displayTotal').innerText = grand.toFixed(2);
+        document.getElementById('hiddenTotal').value = grand.toFixed(2);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Billing List</title>
+    <link rel="stylesheet" th:href="@{/css/billstyle.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="billing-container">
+        <h2><i class="fa-solid fa-list"></i> All Billing Records</h2>
+        
+        <table id="billingTable">
+            <thead>
+                <tr>
+                    <th>Bill ID</th>
+                    <th>Patient Name</th>
+                    <th>Doctor</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Total Amount</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="b : ${bills}">
+                    <td th:text="${b.billId}"></td>
+                    <td th:text="${b.patientName}"></td>
+                    <td th:text="${b.doctorName}"></td>
+                    <td th:text="${b.billType}"></td>
+                    <td th:text="${b.billDate}"></td>
+                    <td th:text="'₹ ' + ${b.totalAmount}"></td>
+                    <td>
+                    <a th:href="@{'/viewBill/' + ${b.id}}" class="btn btn-add" style="padding: 5px 10px; text-decoration: none;">View</a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(bills)}">
+                    <td colspan="7" style="text-align: center;">No billing records found.</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div style="margin-top: 20px;">
+            <a th:href="@{/consultationBill}" class="btn btn-add" style="text-decoration: none;">+ New Bill</a>
+        </div>
+    </div>
+
+</body>
+</html>

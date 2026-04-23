@@ -1,0 +1,78 @@
+.pg-body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f7f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.pg-container {
+    background: white;
+    width: 800px;
+    display: flex;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.pg-order-summary {
+    flex: 1;
+    background: #1a237e;
+    color: white;
+    padding: 40px;
+}
+
+.pg-summary-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.pg-total { color: #ffc107; font-size: 24px; }
+
+.pg-payment-methods {
+    flex: 1.5;
+    padding: 40px;
+}
+
+.pg-method {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.pg-method:hover { border-color: #3949ab; }
+
+.pg-method input { margin-right: 15px; width: 20px; height: 20px; }
+
+.pg-method-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-weight: bold;
+}
+
+.pg-submit-btn {
+    width: 100%;
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.pg-submit-btn:hover { background: #218838; }

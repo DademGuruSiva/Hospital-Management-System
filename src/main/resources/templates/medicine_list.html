@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Medicine Inventory - Hospital Management</title>
+    
+    <link rel="stylesheet" th:href="@{/css/medicine_list.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body style="background-color: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+
+    <div class="list-container">
+        <div class="list-header">
+            <h2><i class="fa-solid fa-boxes-stacked"></i> Medicine Inventory</h2>
+            <a th:href="@{/addMedicine}" style="text-decoration: none; background: #28a745; color: white; padding: 10px 20px; border-radius: 6px; font-weight: bold;">
+                <i class="fa-solid fa-plus"></i> Add New Stock
+            </a>
+        </div>
+        
+        <table class="med-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Medicine Name</th>
+                    <th>Batch No</th>
+                    <th>Category</th>
+                    <th>Stock Qty</th>
+                    <th>Price (₹)</th>
+                    <th>Expiry Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="med : ${medicines}">
+                    <td th:text="${med.medicineId}">MED-001</td>
+                    <td th:text="${med.name}" style="font-weight: 600; color: #1a3c6d;">Dolo 650</td>
+                    <td th:text="${med.batchNumber}">BAT882</td>
+                    <td th:text="${med.category}">Tablet</td>
+                    <td>
+                        <span th:text="${med.stockQuantity}" 
+                              class="stock-badge"
+                              th:classappend="${med.stockQuantity < 10 ? 'low-stock' : 'in-stock'}">
+                        </span>
+                    </td>
+                    <td th:text="${med.pricePerUnit}">15.50</td>
+                    <td th:text="${med.expiryDate}">2026-10-20</td>
+                    <td>
+                        <a th:href="@{'/editMedicine/' + ${med.id}}" class="btn-edit" title="Edit Medicine">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        
+                        <a href="javascript:void(0)" 
+                           th:onclick="'confirmDelete(' + ${med.id} + ')'" 
+                           class="btn-delete" title="Delete Medicine">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div th:if="${#lists.isEmpty(medicines)}" style="text-align: center; padding: 40px; color: #888;">
+            <i class="fa-solid fa-folder-open" style="font-size: 40px; display: block; margin-bottom: 10px;"></i>
+            No medicines found in the inventory.
+        </div>
+    </div>
+
+    <script>
+        // Delete Confirmation Logic
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This medicine will be permanently removed from stock!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirects to Controller @GetMapping("/deleteMedicine/{id}")
+                    window.location.href = '/deleteMedicine/' + id;
+                }
+            })
+        }
+    </script>
+
+    <script th:if="${showDeletePopup}">
+        Swal.fire({
+            title: 'Deleted!',
+            text: 'Medicine has been removed successfully.',
+            icon: 'success',
+            confirmButtonColor: '#1a3c6d'
+        });
+    </script>
+
+    <script th:if="${showPopup}">
+        Swal.fire({
+            title: 'Saved!',
+            text: '[[${successMsg}]]',
+            icon: 'success',
+            confirmButtonColor: '#1a3c6d'
+        });
+    </script>
+
+</body>
+</html>

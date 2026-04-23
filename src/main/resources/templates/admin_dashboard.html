@@ -1,0 +1,177 @@
+ <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital Admin | Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; display: flex; }
+        
+        /* Sidebar */
+        .sidebar { width: 250px; height: 100vh; background: #1e293b; color: white; position: fixed; padding-top: 10px; z-index: 1000; overflow-y: auto; }
+        .sidebar h2 { color: #38bdf8; text-align: center; margin-bottom: 10px; font-size: 1.5rem; }
+        .admin-info-sidebar { text-align: center; padding: 15px; border-bottom: 1px solid #334155; margin-bottom: 10px; }
+        .admin-info-sidebar i { font-size: 40px; color: #38bdf8; margin-bottom: 8px; }
+        .admin-info-sidebar p { margin: 0; font-size: 0.9rem; color: #cbd5e1; }
+
+        /* Top Navbar */
+        .top-navbar { position: fixed; top: 0; left: 250px; right: 0; height: 60px; background: white; display: flex; justify-content: flex-end; align-items: center; padding: 0 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 999; }
+        .logout-btn { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; text-decoration: none; font-size: 0.85rem; }
+
+        /* Menu Items & Pharmacy Support */
+        .sidebar a, .dropdown-btn { display: block; padding: 15px 20px; color: #cbd5e1; text-decoration: none; border-bottom: 1px solid #334155; width: 100%; background: none; border: none; text-align: left; cursor: pointer; font-size: 0.95rem; font-family: inherit; }
+        .sidebar a:hover, .dropdown-btn:hover { background: #334155; color: white; }
+        .dropdown-container { display: none; background-color: #0f172a; }
+        .dropdown-container a { padding-left: 45px; font-size: 0.85rem; border-bottom: none; }
+
+        /* Main Content */
+        .main-content { margin-left: 250px; margin-top: 60px; width: calc(100% - 250px); padding: 40px; }
+        .main-content h2 { color: #1e293b; margin-bottom: 30px; border-left: 5px solid #3498db; padding-left: 15px; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 40px; }
+        .stat-card { background: white; padding: 30px; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 180px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-top: 6px solid #ddd; }
+        .patients { border-top-color: #3498db; } .doctors { border-top-color: #2ecc71; } .appts { border-top-color: #f1c40f; } .bills { border-top-color: #e67e22; } .meds { border-top-color: #9b59b6; } .live { border-top-color: #e74c3c; }
+
+        /* Table & Controls */
+        .table-container { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .table-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        
+        .search-box-main { display: flex; align-items: center; background: #f1f5f9; border-radius: 6px; padding: 5px 15px; border: 1px solid #e2e8f0; width: 300px; }
+        .search-box-main input { border: none; background: transparent; outline: none; padding: 8px; width: 100%; font-size: 0.9rem; }
+        .search-box-main button { background: transparent; border: none; color: #3498db; cursor: pointer; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th { text-align: left; padding: 12px; background: #f8fafc; color: #64748b; font-size: 0.85rem; }
+        td { padding: 12px; border-bottom: 1px solid #f1f5f9; color: #334155; }
+
+        /* Status & Buttons */
+        .status-badge { padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; text-decoration: none; }
+        .bg-success { background: #dcfce7; color: #166534; }
+        .bg-pending { background: #fef9c3; color: #854d0e; }
+        .bg-cancel { background: #fee2e2; color: #991b1b; }
+
+        @media print {
+            .sidebar, .top-navbar, .logout-btn, .actions, button, .search-box-main { display: none !important; }
+            .main-content { margin: 0 !important; width: 100% !important; padding: 0 !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-navbar">
+        <div class="user-profile">
+            <span style="font-weight: 600;"><i class="fa-solid fa-user-shield"></i> Welcome, Admin</span>
+            <form th:action="@{/logout}" method="post" style="display:inline; margin-left:15px;">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <h2>HMS ADMIN</h2>
+        <div class="admin-info-sidebar"><i class="fa-solid fa-circle-user"></i><p>Admin Dashboard</p></div>
+        
+        <a th:href="@{/adminDashboard}"><i class="fa-solid fa-house"></i> Dashboard</a>
+
+        <button class="dropdown-btn"><i class="fa-solid fa-user-injured"></i> Patients <i class="fa fa-caret-down" style="float:right"></i></button>
+        <div class="dropdown-container">
+            <a th:href="@{/addPatient}">Add Patient</a>
+            <a th:href="@{/patientList}">View Patients</a>
+        </div>
+
+        <button class="dropdown-btn"><i class="fa-solid fa-user-md"></i> Doctors <i class="fa fa-caret-down" style="float:right"></i></button>
+        <div class="dropdown-container">
+            <a th:href="@{/addDoctor}">Add Doctor</a>
+            <a th:href="@{/doctorList}">View Doctors</a>
+        </div>
+
+        <button class="dropdown-btn"><i class="fa-solid fa-calendar-check"></i> Appointments <i class="fa fa-caret-down" style="float:right"></i></button>
+        <div class="dropdown-container">
+            <a th:href="@{/addAppointment}">New Booking</a>
+            <a th:href="@{/appointmentList}">View All</a>
+        </div>
+
+        <button class="dropdown-btn"><i class="fa-solid fa-file-invoice-dollar"></i> Billing <i class="fa fa-caret-down" style="float:right"></i></button>
+        <div class="dropdown-container">
+            <a th:href="@{/consultationBill}">Create Bill</a>
+            <a th:href="@{/billingList}">Billing History</a>
+        </div>
+
+        <button class="dropdown-btn"><i class="fa-solid fa-pills"></i> Pharmacy <i class="fa fa-caret-down" style="float:right"></i></button>
+        <div class="dropdown-container">
+            <a th:href="@{/addMedicine}">Add Medicine</a>
+            <a th:href="@{/medicineList}">Inventory</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h2>Hospital Status Dashboard</h2>
+        
+        <div class="stats-grid">
+            <div class="stat-card patients"><i class="fa-solid fa-user-injured" style="color:#3498db; font-size:2rem;"></i><h3 th:text="${totalPatients}">0</h3><p>Total Patients</p></div>
+            <div class="stat-card doctors"><i class="fa-solid fa-user-md" style="color:#2ecc71; font-size:2rem;"></i><h3 th:text="${totalDoctors}">0</h3><p>Total Doctors</p></div>
+            <div class="stat-card appts"><i class="fa-solid fa-calendar-check" style="color:#f1c40f; font-size:2rem;"></i><h3 th:text="${totalAppts}">0</h3><p>Appointments</p></div>
+            <div class="stat-card bills"><i class="fa-solid fa-file-invoice-dollar" style="color:#e67e22; font-size:2rem;"></i><h3 th:text="${totalBills}">0</h3><p>Total Bills</p></div>
+            <div class="stat-card meds"><i class="fa-solid fa-pills" style="color:#9b59b6; font-size:2rem;"></i><h3 th:text="${totalMedicines}">0</h3><p>Medicines</p></div>
+            <div class="stat-card live"><i class="fa-solid fa-heartbeat" style="color:#e74c3c; font-size:2rem;"></i><h3 style="color: #e74c3c;">Active</h3><p>Status</p></div>
+        </div>
+
+       <div class="table-container">
+            <div class="table-controls">
+                <form th:action="@{/searchPatient}" method="get" class="search-box-main">
+                    <input type="text" name="query" placeholder="Search Patient ID or Name...">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+                <h3 style="margin: 0;">Recent Appointments</h3>
+                <button onclick="window.print()" style="background: #1e293b; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer;">
+                    <i class="fa fa-print"></i> Print Report
+                </button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Patient Name</th>
+                        <th>Doctor Name</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th class="actions" style="text-align: center;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="appt : ${recentAppointments}">
+                        <td th:text="${appt.appointmentId}">ID</td>
+                        <td th:text="${appt.patientName != null ? appt.patientName : (appt.patient != null ? appt.patient.firstName + ' ' + appt.patient.lastName : 'Unknown')}"></td>
+                        <td th:text="${appt.doctor != null ? appt.doctor.name : 'Not Assigned'}"></td>
+                        <td th:text="${appt.appointmentDate}">Date</td>
+                        <td>
+                            <span class="status-badge" th:classappend="${appt.status == 'Confirmed' || appt.status == 'Success' ? 'bg-success' : (appt.status == 'Cancelled' ? 'bg-cancel' : 'bg-pending')}" th:text="${appt.status != null ? appt.status : 'Pending'}">Status</span>
+                        </td>
+                        <td class="actions" style="text-align: center;">
+                            <div style="display: flex; justify-content: center; gap: 10px; align-items: center;">
+                                
+                                <a th:if="${appt.status == 'Pending'}" th:href="@{'/approveAppointment/' + ${appt.id}}" class="status-badge bg-success">Accept</a>
+                                <a th:if="${appt.status == 'Pending'}" th:href="@{'/cancelAppointment/' + ${appt.id}}" class="status-badge bg-cancel">Reject</a>
+
+                                <a th:href="@{'/editAppointment/' + ${appt.id}}" style="color: #3498db;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a th:href="@{'/deleteAppointment/' + ${appt.id}}" style="color: #ef4444;" onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        for (var i = 0; i < dropdown.length; i++) {
+          dropdown[i].addEventListener("click", function() {
+            var dropdownContent = this.nextElementSibling;
+            dropdownContent.style.display = (dropdownContent.style.display === "block") ? "none" : "block";
+          });
+        }
+    </script>
+</body>
+</html>

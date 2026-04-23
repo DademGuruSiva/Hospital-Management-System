@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/doctor_dashboard.css}">
+</head>
+<body>
+
+<div class="dashboard-wrapper">
+    <div class="dash-header">
+        <h2>Doctor Dashboard</h2>
+        <div>
+            Welcome, <span th:text="${docName}" style="text-decoration: underline;">Doctor</span>! 
+            <a th:href="@{/doctor/login}" class="logout-link">Logout</a>
+        </div>
+    </div>
+
+    <div class="content-card">
+        <h3 style="color: #2b45a2;">Today's Appointments</h3>
+        <table class="apt-table">
+            <thead>
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Symptoms</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="appt : ${appointments}">
+                    <td th:text="${appt.patientName}">Name</td>
+                    
+                    <td th:text="${appt.reason}">Symptoms</td>
+                    <td th:text="${appt.appointmentDate}">Date</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div th:if="${#lists.isEmpty(appointments)}" class="empty-msg">
+             No appointments found for you.
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

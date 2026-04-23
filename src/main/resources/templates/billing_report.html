@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Billing Report</title>
+    <link rel="stylesheet" th:href="@{/css/billstyle.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<div class="billing-container">
+    <div class="report-menu no-print">
+        <a th:href="@{/billingReport}" class="report-btn active">Billing Report</a>
+        <a th:href="@{/doctorReport}" class="report-btn">Doctor Report</a>
+        <a th:href="@{/patientReport}" class="report-btn">Patient Report</a>
+        <a th:href="@{/appointmentReport}" class="report-btn">Appointment Report</a>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2><i class="fa-solid fa-chart-line"></i> Overall Billing Summary</h2>
+        <button onclick="window.print()" class="btn btn-add no-print" style="background: #27ae60;">
+            <i class="fa-solid fa-print"></i> Print Report
+        </button>
+    </div>
+    <div class="no-print" style="margin-bottom: 15px;">
+    <a th:href="@{/}" class="btn-back">
+        <i class="fa-solid fa-house"></i> Back to Dashboard
+    </a>
+</div>
+
+    <div class="report-cards">
+        <div class="card">
+            <h3>Total Invoices</h3>
+            <p th:text="${totalBills}">0</p>
+        </div>
+        <div class="card" style="border-bottom: 4px solid #27ae60;">
+            <h3>Total Revenue</h3>
+            <p>₹ <span th:text="${totalRevenue}">0.00</span></p>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Bill ID</th>
+                <th>Patient Name</th>
+                <th>Bill Type</th>
+                <th>Date</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="b : ${bills}">
+                <td th:text="${b.billId}"></td>
+                <td th:text="${b.patientName}"></td>
+                <td th:text="${b.billType}"></td>
+                <td th:text="${b.billDate}"></td>
+                <td style="font-weight: bold;" th:text="'₹ ' + ${b.totalAmount}"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

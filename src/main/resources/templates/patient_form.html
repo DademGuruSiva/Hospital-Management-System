@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Registration</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/patient.css}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h2 class="page-title">Patient Registration</h2>
+        
+        <div class="avatar-container">
+            <div class="avatar-circle">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile">
+            </div>
+        </div>
+
+        <form th:action="@{/savePatient}" th:object="${patient}" method="post">
+            <input type="hidden" th:field="*{id}">
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>First name:</label>
+                    <input type="text" th:field="*{firstName}" placeholder="Enter first name" required>
+                </div>
+                <div class="form-group">
+                    <label>Last name:</label>
+                    <input type="text" th:field="*{lastName}" placeholder="Enter last name" required>
+                </div>
+                <div class="form-group">
+                    <label>Gender:</label>
+                    <select th:field="*{gender}" required>
+                        <option value="">---------</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Age:</label>
+                    <input type="number" th:field="*{age}" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone:</label>
+                    <input type="text" th:field="*{phone}" required>
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" th:field="*{email}">
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Address:</label>
+                    <textarea th:field="*{address}" rows="1"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Disease:</label>
+                    <input type="text" th:field="*{disease}" required>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button type="submit" class="btn-save">Save Patient</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="mb-3">
+    <a th:href="@{/patients/new}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Add New Patient
+    </a>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var showPopup = [[${showPopup}]];
+    var generatedId = [[${generatedId}]];
+    var msg = [[${successMsg}]];
+
+    if (showPopup) {
+        Swal.fire({
+            title: 'Congratulations!',
+            // 'generatedId' null unte 'N/A' chupisthundhi error raakunda
+            html: (msg ? msg : 'Action Successful!') + '<br><br><b>Patient ID: ' + (generatedId ? generatedId : 'Updating...') + '</b>',
+            icon: 'success',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#2b45a2',
+            allowOutsideClick: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // 👉 Ikkada change chesa: Direct ga registration form ke velthundhi
+                window.location.href = '/addPatient';
+            }
+        });
+    }
+    /*]]>*/
+</script>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quick Appointment</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/doctor-style.css}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="doc-main-container">
+    <div class="doc-reg-card">
+        <h2 class="doc-header-title">Quick Appointment</h2>
+        
+        <form th:action="@{/saveAppointment}" th:object="${appointment}" method="post">
+            <div class="doc-form-grid">
+                
+                <div class="doc-field-group">
+                    <label>Patient Name</label>
+                    <input type="text" th:field="*{patientName}" required>
+                </div>
+
+                <div class="doc-field-group">
+                    <label>Mobile Number</label>
+                    <input type="text" th:field="*{patientPhone}" required>
+                </div>
+
+                <div class="doc-field-group">
+                    <label>Doctor</label>
+                    <select th:field="*{doctor}" required>
+                        <option value="">-- Select Doctor --</option>
+                        <option th:each="doc : ${doctors}" th:value="${doc.id}" th:text="${doc.name}"></option>
+                    </select>
+                </div>
+
+                <div class="doc-field-group">
+                    <label>Appointment Date</label>
+                    <input type="date" th:field="*{appointmentDate}" required>
+                </div>
+
+                <div class="doc-field-group">
+                    <label>Appointment Time</label>
+                    <input type="time" th:field="*{appointmentTime}" required>
+                </div>
+
+                <div class="doc-field-group">
+                    <label>Reason</label>
+                    <textarea th:field="*{reason}" rows="2"></textarea>
+                </div>
+
+            </div>
+            <div class="doc-btn-container">
+                <button type="submit" class="doc-save-btn">Book Quick Appointment</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    var showPopup = [[${showPopup}]];
+    if (showPopup) {
+        Swal.fire({ title: 'Success!', text: 'Appointment Saved!', icon: 'success' });
+    }
+</script>
+</body>
+</html>

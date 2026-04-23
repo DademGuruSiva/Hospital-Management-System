@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Bill</title>
+    <link rel="stylesheet" th:href="@{/css/billstyle.css}">
+</head>
+<body>
+    <div class="billing-container">
+        <h2 style="display: flex; justify-content: space-between;">
+            <span>Invoice: <span th:text="${bill.billId}"></span></span>
+            <button onclick="window.print()" class="btn btn-add" style="font-size: 14px;">Print Bill</button>
+        </h2>
+        
+        <h2>
+    <i class="fa-solid fa-list"></i> All Billing Records
+    <button onclick="window.print()" class="btn btn-add" style="float: right;">Print List</button>
+</h2>
+
+        <div class="form-grid" style="border-bottom: 2px solid #eee; padding-bottom: 20px;">
+            <div>
+                <label>Patient Name:</label>
+                <p th:text="${bill.patientName}"></p>
+            </div>
+            <div>
+                <label>Doctor:</label>
+                <p th:text="${bill.doctorName}"></p>
+            </div>
+            <div>
+                <label>Date:</label>
+                <p th:text="${bill.billDate}"></p>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Description</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${bill.items}">
+                    <td th:text="${item.itemName}"></td>
+                    <td th:text="${item.unitPrice}"></td>
+                    <td th:text="${item.quantity}"></td>
+                    <td th:text="${item.totalPrice}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="total-section">
+            Grand Total: ₹ <span th:text="${bill.totalAmount}"></span>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <a th:href="@{/billingList}" class="btn btn-add" style="text-decoration: none; background: #7f8c8d;">Back to List</a>
+        </div>
+    </div>
+</body>
+</html>

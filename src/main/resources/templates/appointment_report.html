@@ -1,0 +1,93 @@
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointment Report</title>
+    <link rel="stylesheet" th:href="@{/css/billstyle.css}">
+    <link rel="stylesheet" th:href="@{/css/report-style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<div class="billing-container">
+    <div class="report-menu no-print">
+        <a th:href="@{/billingReport}" class="report-btn">Billing Report</a>
+        <a th:href="@{/doctorReport}" class="report-btn">Doctor Report</a>
+        <a th:href="@{/patientReport}" class="report-btn">Patient Report</a>
+        <a th:href="@{/appointmentReport}" class="report-btn active">Appointment Report</a>
+    </div>
+
+    <div class="report-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div>
+            <a th:href="@{/}" class="btn-back no-print">
+                <i class="fa-solid fa-house"></i> Back to Dashboard
+            </a>
+            <h2 style="margin-top: 15px;"><i class="fa-solid fa-calendar-check"></i> Appointment Summary</h2>
+        </div>
+        <button onclick="window.print()" class="btn btn-add no-print" style="background: #9b59b6;">
+            <i class="fa-solid fa-print"></i> Print Summary
+        </button>
+    </div>
+
+    <div class="report-filters no-print">
+        <form th:action="@{/appointmentReport}" method="get" class="filter-form">
+            <div class="filter-group">
+                <label>Start Date</label>
+                <input type="date" name="startDate" class="filter-input" required>
+            </div>
+            <div class="filter-group">
+                <label>End Date</label>
+                <input type="date" name="endDate" class="filter-input" required>
+            </div>
+            <button type="submit" class="btn-filter">
+                <i class="fa-solid fa-filter"></i> Filter
+            </button>
+            <a th:href="@{/appointmentReport}" class="btn-clear">Reset</a>
+        </form>
+    </div>
+
+    <div class="report-cards">
+        <div class="card" style="border-bottom: 4px solid #9b59b6;">
+            <h3>Total Appointments</h3>
+            <p th:text="${totalAppointments}">0</p>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Appt ID</th>
+                <th>Patient Name</th>
+                <th>Doctor ID</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="a : ${appointments}">
+                <td th:text="${a.id}"></td>
+                
+                <td th:text="${a.patientName != null ? a.patientName : (a.patient != null ? a.patient.firstName : 'N/A')}"></td>
+
+                <td th:text="${a.doctor != null ? a.doctor.id : 'N/A'}"></td>
+                
+                <td th:text="${a.appointmentDate}"></td>
+                <td>
+                    <span th:class="${a.status == 'Confirmed' || a.status == 'Success' ? 'badge-active' : 'badge-pending'}" 
+                          th:text="${a.status}" 
+                          style="padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: bold;">
+                    </span>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(appointments)}">
+                <td colspan="5" style="text-align: center; padding: 20px; color: #888;">No appointments found for selected criteria.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

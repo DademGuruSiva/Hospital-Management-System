@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Service Order</title>
+    <link rel="stylesheet" th:href="@{/css/billstyle.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="billing-container">
+    <h2><i class="fa-solid fa-microscope"></i> New Service Order</h2>
+
+    <form th:action="@{/saveBill}" th:object="${bill}" method="post">
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Patient Name</label>
+                <select th:field="*{patientName}" required>
+                    <option value="">-- Select Patient --</option>
+                    <option th:each="p : ${patients}" 
+                            th:value="${p.firstName + ' ' + p.lastName}" 
+                            th:text="${p.firstName + ' ' + p.lastName}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Doctor Name</label>
+                <input type="text" th:field="*{doctorName}" placeholder="Referenced Doctor" required>
+            </div>
+            <div class="form-group">
+                <label>Bill Type</label>
+                <input type="text" th:field="*{billType}" readonly>
+            </div>
+        </div>
+
+        <div class="item-section">
+            <h3>Add Lab Tests / Services</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Service/Test Name</label>
+                    <input type="text" id="sName" placeholder="e.g. CBC, X-Ray, MRI">
+                </div>
+                <div class="form-group">
+                    <label>Charge (₹)</label>
+                    <input type="number" id="sPrice" placeholder="0.00">
+                </div>
+                <button type="button" onclick="addService()" class="btn btn-add">ADD</button>
+            </div>
+
+            <table id="sTable">
+                <thead>
+                    <tr>
+                        <th>Service Description</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="total-section">
+            Total Amount: ₹ <span id="displayTotal">0.00</span>
+            <input type="hidden" th:field="*{totalAmount}" id="hiddenTotal">
+        </div>
+
+        <button type="submit" class="btn btn-save">SAVE SERVICE BILL</button>
+    </form>
+</div>
+
+<script>
+    function addService() {
+        const name = document.getElementById('sName').value;
+        const price = parseFloat(document.getElementById('sPrice').value);
+        if(!name || !price) return alert("Enter Service Name and Price!");
+
+        const tbody = document.querySelector('#sTable tbody');
+        const row = tbody.insertRow();
+        row.innerHTML = `
+            <td>${name} <input type="hidden" name="itemNames" value="${name}"></td>
+            <td class="row-price">${price} <input type="hidden" name="itemPrices" value="${price}"></td>
+            <input type="hidden" name="itemQtys" value="1">
+            <td><i class="fa-solid fa-trash" style="color:red; cursor:pointer;" onclick="this.closest('tr').remove(); calc();"></i></td>
+        `;
+        calc();
+        document.getElementById('sName').value = '';
+        document.getElementById('sPrice').value = '';
+    }
+
+    function calc() {
+        let grand = 0;
+        document.querySelectorAll('.row-price').forEach(td => grand += parseFloat(td.innerText));
+        document.getElementById('displayTotal').innerText = grand.toFixed(2);
+        document.getElementById('hiddenTotal').value = grand.toFixed(2);
+    }
+</script>
+</body>
+</html>

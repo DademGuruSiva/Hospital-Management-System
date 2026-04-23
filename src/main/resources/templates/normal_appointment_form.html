@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Normal Appointment</title>
+    <link rel="stylesheet" th:href="@{/css/normal-appointment.css}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="appointment-card">
+    <div class="appointment-header">
+        <img src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png" alt="icon">
+        <h2>Normal Appointment</h2>
+    </div>
+    
+    <form th:action="@{/saveAppointment}" th:object="${appointment}" method="post">
+        <div class="appointment-grid">
+            
+            <div class="input-box">
+                <label>Patient</label>
+                <select th:field="*{patient}" required>
+                <option value="">-- Select Patient --</option>
+                <option th:each="p : ${patients}" 
+                  th:value="${p.id}" 
+                  th:text="${p.firstName + ' ' + p.lastName}"></option>
+                </select>
+            </div>
+
+            <div class="input-box">
+                <label>Doctor</label>
+                <select th:field="*{doctor}" required>
+                    <option value="">-- Select Doctor --</option>
+                    <option th:each="d : ${doctors}" th:value="${d.id}" th:text="${d.name}"></option>
+                </select>
+            </div>
+
+            <div class="input-box">
+                <label>Appointment Date</label>
+                <input type="date" th:field="*{appointmentDate}" required>
+            </div>
+
+            <div class="input-box">
+                <label>Appointment Time</label>
+                <input type="time" th:field="*{appointmentTime}" required>
+            </div>
+
+            <div class="input-box reason-box">
+                <label>Reason</label>
+                <textarea th:field="*{reason}" rows="2" placeholder="Describe the reason..."></textarea>
+            </div>
+
+        </div>
+
+        <div class="button-section">
+            <button type="submit" class="book-btn">Book Appointment</button>
+        </div>
+    </form>
+</div>
+
+<script th:inline="javascript">
+    var showPopup = [[${showPopup}]];
+    var successMsg = [[${successMsg}]];
+    if (showPopup) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Booked!',
+            text: successMsg,
+            confirmButtonColor: '#2b45a2'
+        });
+    }
+</script>
+
+</body>
+</html>

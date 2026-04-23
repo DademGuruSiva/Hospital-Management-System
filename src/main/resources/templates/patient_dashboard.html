@@ -1,0 +1,98 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/patient_dashboard.css}">
+</head>
+<body class="pd-body"> <div class="pd-sidebar">
+        <h2 class="pd-sidebar-title">Hospital App</h2>
+        <a href="#" class="pd-nav-link">My Profile</a>
+        <a href="#" class="pd-nav-link">Book Appointment</a>
+        <a href="#" class="pd-nav-link">My History</a>
+        <br>
+        <a th:href="@{/logout}" class="pd-logout-btn">Logout</a>
+    </div>
+
+    <div class="pd-main-content">
+        <header class="pd-header">
+            <h1>Welcome, <span th:text="${patientName}">User</span>!</h1>
+        </header>
+
+        <div class="pd-card-section">
+            <h3 class="pd-section-title">Available Specialists</h3>
+            <div class="pd-doctor-grid">
+                <div class="pd-doctor-card" th:each="doc : ${doctors}">
+                    <h4 class="pd-doc-name" th:text="${doc.name}">Doctor Name</h4>
+                    <p class="pd-doc-info">Spec: <span th:text="${doc.specialization}">Specialization</span></p>
+                    <p class="pd-doc-info">Exp: <span th:text="${doc.experience}">0</span> Yrs</p>
+                    <p class="pd-fee-tag">Consultation Fee: ₹<span th:text="${doc.consultationFee}">0</span></p>
+                    
+                    <a th:href="@{/patient/pay-step/{id}(id=${doc.id})}" class="pd-pay-btn">Book & Pay Now</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="pd-card-section">
+            <h3 class="pd-section-title">Your Appointments</h3>
+            <table class="pd-table">
+                <thead>
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Date</th>
+                        <th>Fee Amount</th>
+                        <th>Payment</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="appt : ${myAppointments}">
+                        <td th:text="${appt.doctor.name}">Doctor</td>
+                        <td th:text="${appt.appointmentDate}">Date</td>
+                        <td th:text="${'₹' + appt.amountPaid}">Amount</td>
+                        <td>
+                            <span th:text="${appt.paymentStatus}"
+                                  th:class="${appt.paymentStatus == 'Paid' ? 'pd-status-paid' : 'pd-status-unpaid'}">
+                            </span>
+                        </td>
+                        <td th:text="${appt.status}">Success</td>
+                        <td>
+                            <button class="pd-pay-btn" 
+                                    style="background-color: #3949ab; cursor: pointer;"
+                                    th:if="${appt.paymentStatus == 'Paid'}"
+                                    th:onclick="printInvoice([[${appt.doctor.name}]], [[${appt.appointmentDate}]], [[${appt.amountPaid}]])">
+                                Print Receipt
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        function printInvoice(doctor, date, amount) {
+            var patient = [[${patientName}]];
+            var printWindow = window.open('', '', 'height=600,width=800');
+            
+            printWindow.document.write('<html><head><title>Receipt</title><style>');
+            printWindow.document.write('body{font-family:sans-serif; padding:40px;} .bill{border:1px solid #ccc; padding:20px; border-radius:10px;}');
+            printWindow.document.write('h1{color:#1a237e; text-align:center;} .row{margin:10px 0; font-size:16px;}');
+            printWindow.document.write('</style></head><body><div class="bill">');
+            printWindow.document.write('<h1>HOSPITAL RECEIPT</h1><hr>');
+            printWindow.document.write('<div class="row"><strong>Patient:</strong> ' + patient + '</div>');
+            printWindow.document.write('<div class="row"><strong>Doctor:</strong> Dr. ' + doctor + '</div>');
+            printWindow.document.write('<div class="row"><strong>Date:</strong> ' + date + '</div>');
+            printWindow.document.write('<div class="row"><strong>Amount Paid:</strong> ₹' + amount + '</div>');
+            printWindow.document.write('<p style="text-align:center; margin-top:20px; color:green; font-weight:bold;">Transaction Successful ✅</p>');
+            printWindow.document.write('</div></body></html>');
+            
+            printWindow.document.close();
+            printWindow.print();
+        }
+    </script>
+</body>
+</html>

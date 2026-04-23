@@ -1,0 +1,106 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Registration</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/doctor-style.css}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="doc-main-container">
+    <div class="doc-reg-card">
+        <h2 class="doc-header-title">Doctor Registration</h2>
+        
+        <div class="doc-avatar-section">
+            <div class="doc-avatar-circle">
+                <img src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png" alt="Doctor Icon">
+            </div>
+        </div>
+
+        <form th:action="@{/saveDoctor}" th:object="${doctor}" method="post">
+            <input type="hidden" th:field="*{id}">
+            <input type="hidden" th:field="*{doctorId}">
+
+            <div class="doc-form-grid">
+                <div class="doc-field-group">
+                    <label>Name:</label>
+                    <input type="text" th:field="*{name}" placeholder="Enter Doctor Name" required>
+                </div>
+                <div class="doc-field-group">
+                    <label>Specialization:</label>
+                    <select th:field="*{specialization}" required>
+                        <option value="">---------</option>
+                        <option value="Cardiology">Cardiology</option>
+                        <option value="Pediatrics">Pediatrics</option>
+                        <option value="Orthopedic">Orthopedic</option>
+                        <option value="Urology">Urology</option>
+                        <option value="Neurology">Neurology</option>
+                    </select>
+                </div>
+                <div class="doc-field-group">
+                    <label>Phone:</label>
+                    <input type="text" th:field="*{phone}" placeholder="Phone Number" required>
+                </div>
+
+                <div class="doc-field-group">
+                    <label>Email:</label>
+                    <input type="email" th:field="*{email}" placeholder="Email address">
+                </div>
+                
+                <div class="doc-field-group">
+                    <label>Login Username:</label>
+                    <input type="text" th:field="*{username}" placeholder="Create Username for Login" required>
+                </div>
+
+                <div class="doc-field-group">
+                    <label>Login Password:</label>
+                    <input type="password" th:field="*{password}" placeholder="Create Password for Login" required>
+                </div>
+
+                <div class="doc-field-group">
+                    <label>Experience:</label>
+                    <input type="text" th:field="*{experience}" placeholder="e.g. 8 Years">
+                </div>
+                <div class="doc-field-group">
+                    <label>Consultation fee:</label>
+                    <input type="number" step="0.01" th:field="*{consultationFee}" placeholder="0.0">
+                </div>
+
+                <div class="doc-check-row">
+                    <input type="checkbox" th:field="*{available}" id="docAvailable">
+                    <label for="docAvailable">Available</label>
+                </div>
+            </div>
+
+            <div class="doc-btn-container">
+                <button type="submit" class="doc-save-btn">Save Doctor</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var showPopup = [[${showPopup}]];
+    var msg = [[${successMsg}]];
+
+    if (showPopup) {
+        Swal.fire({
+            title: 'Saved Successfully!',
+            text: msg,
+            icon: 'success',
+            confirmButtonColor: '#2b45a2',
+            timer: 2500,
+            showConfirmButton: false
+        }).then(function() {
+            window.location.href = "/doctorList"; 
+        });
+    }
+    /*]]>*/
+</script>
+</body>
+</html>

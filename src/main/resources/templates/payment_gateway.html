@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Secure Payment</title>
+    <link rel="stylesheet" th:href="@{/css/payment_gateway.css}">
+</head>
+<body class="pg-body">
+    <div class="pg-container">
+        <div class="pg-order-summary">
+            <h2>Checkout</h2>
+            <div class="pg-summary-card">
+                <p><strong>Doctor:</strong> <span th:text="${doctor.name}">Dr. Name</span></p>
+                <p><strong>Specialization:</strong> <span th:text="${doctor.specialization}">Orthopedic</span></p>
+                <hr>
+                <h3 class="pg-total">Amount to Pay: ₹<span th:text="${doctor.consultationFee}">500</span></h3>
+            </div>
+        </div>
+
+        <div class="pg-payment-methods">
+            <h3>Select Payment Method</h3>
+            
+            <form th:action="@{/patient/confirm-booking}" method="post">
+                <input type="hidden" name="doctorId" th:value="${doctor.id}">
+                <input type="hidden" name="amount" th:value="${doctor.consultationFee}">
+
+                <label class="pg-method">
+                    <input type="radio" name="paymentMode" value="UPI" checked>
+                    <div class="pg-method-details">
+                        <span>UPI (GPay, PhonePe, Paytm)</span>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" alt="UPI" width="50">
+                    </div>
+                </label>
+
+                <label class="pg-method">
+                    <input type="radio" name="paymentMode" value="Card">
+                    <div class="pg-method-details">
+                        <span>Credit / Debit Card</span>
+                        <div class="pg-card-icons">💳</div>
+                    </div>
+                </label>
+
+                <label class="pg-method">
+                    <input type="radio" name="paymentMode" value="Cash">
+                    <div class="pg-method-details">
+                        <span>Pay at Hospital (Cash)</span>
+                    </div>
+                </label>
+
+                <button type="submit" class="pg-submit-btn">Complete Payment & Book</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

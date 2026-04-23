@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sidebar</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="sidebar">
+
+    <div class="menu-item">👤 Patient</div>
+    <div class="submenu">
+        <a href="#">Patient Registration</a>
+        <a href="#">Patient List</a>
+    </div>
+
+    <div class="menu-item">📅 Appointment</div>
+    <div class="submenu">
+        <a href="#">Quick Appointment</a>
+        <a href="#">Normal Appointment</a>
+        <a href="#">Appointment List</a>
+    </div>
+
+    <div class="menu-item">👨‍⚕️ Doctor</div>
+    <div class="submenu">
+        <a href="#">Add Doctor</a>
+        <a href="#">Doctor List</a>
+    </div>
+
+    <div class="menu-item">💳 Billing</div>
+    <div class="submenu">
+        <a href="#">Consultation Bill</a>
+        <a href="#">New Service Order</a>
+        <a href="#">Billing List</a>
+    </div>
+
+    <div class="menu-item">📊 Reports</div>
+    <div class="submenu">
+        <a href="#">Billing Report</a>
+        <a href="#">Doctor Report</a>
+        <a href="#">Patient Report</a>
+        <a href="#">Appointment Report</a>
+    </div>
+
+    <div class="menu-item">💊 Pharmacy</div>
+    <div class="submenu">
+        <a href="#">Add Medicine</a>
+        <a href="#">Medicine List</a>
+    </div>
+
+</div>
+
+<!-- <script th:src="@{/js/script.js}"></script> -->
+<script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>

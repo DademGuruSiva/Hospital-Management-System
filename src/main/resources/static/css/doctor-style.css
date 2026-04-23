@@ -1,0 +1,281 @@
+/* Doctor Registration Specific Styles - No Overlap with Patient CSS */
+
+/* Added Box-Sizing for better layout control */
+.doc-main-container * {
+    box-sizing: border-box;
+}
+
+.doc-main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.doc-reg-card {
+    width: 100%;
+    max-width: 950px;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.doc-header-title {
+    text-align: center;
+    color: #2b45a2;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.doc-avatar-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.doc-avatar-circle {
+    width: 100px;
+    height: 100px;
+    border: 2px solid #2b45a2;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+}
+
+.doc-avatar-circle img {
+    width: 70px;
+    height: 70px;
+}
+
+/* Grid for 3 columns precisely as per image */
+.doc-form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.doc-field-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.doc-field-group label {
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.doc-field-group input, 
+.doc-field-group select {
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    height: 42px; /* Fixed height for uniformity */
+    transition: all 0.3s ease;
+}
+
+.doc-field-group input:focus, 
+.doc-field-group select:focus {
+    border-color: #2b45a2;
+    box-shadow: 0 0 5px rgba(43, 69, 162, 0.2);
+}
+
+/* Checkbox Row Logic */
+.doc-check-row {
+    grid-column: span 3;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.doc-check-row label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+.doc-check-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #2b45a2;
+}
+
+/* Save Button Styling */
+.doc-btn-container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.doc-save-btn {
+    background-color: #2b45a2;
+    color: white;
+    padding: 12px 60px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(43, 69, 162, 0.3);
+}
+
+.doc-save-btn:hover {
+    background-color: #1e327a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(43, 69, 162, 0.4);
+}/* Doctor Registration Specific Styles - No Overlap with Patient CSS */
+
+/* Added Box-Sizing for better layout control */
+.doc-main-container * {
+    box-sizing: border-box;
+}
+
+.doc-main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.doc-reg-card {
+    width: 100%;
+    max-width: 950px;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.doc-header-title {
+    text-align: center;
+    color: #2b45a2;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.doc-avatar-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.doc-avatar-circle {
+    width: 100px;
+    height: 100px;
+    border: 2px solid #2b45a2;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+}
+
+.doc-avatar-circle img {
+    width: 70px;
+    height: 70px;
+}
+
+/* Grid for 3 columns precisely as per image */
+.doc-form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.doc-field-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.doc-field-group label {
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.doc-field-group input, 
+.doc-field-group select {
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    height: 42px; /* Fixed height for uniformity */
+    transition: all 0.3s ease;
+}
+
+.doc-field-group input:focus, 
+.doc-field-group select:focus {
+    border-color: #2b45a2;
+    box-shadow: 0 0 5px rgba(43, 69, 162, 0.2);
+}
+
+/* Checkbox Row Logic */
+.doc-check-row {
+    grid-column: span 3;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.doc-check-row label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+.doc-check-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #2b45a2;
+}
+
+/* Save Button Styling */
+.doc-btn-container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.doc-save-btn {
+    background-color: #2b45a2;
+    color: white;
+    padding: 12px 60px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(43, 69, 162, 0.3);
+}
+
+.doc-save-btn:hover {
+    background-color: #1e327a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(43, 69, 162, 0.4);
+}

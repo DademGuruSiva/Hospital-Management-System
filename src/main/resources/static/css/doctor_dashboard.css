@@ -1,0 +1,80 @@
+/* Doctor Dashboard - Separate Style File */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f2f5;
+}
+
+.dashboard-wrapper {
+    padding: 25px;
+}
+
+.dash-header {
+    background: linear-gradient(135deg, #2b45a2 0%, #1e306e 100%);
+    color: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.dash-header h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.logout-link {
+    background-color: #ff4757;
+    color: white !important;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.logout-link:hover {
+    background-color: #ff6b81;
+    transform: translateY(-2px);
+}
+
+.content-card {
+    background: white;
+    margin-top: 25px;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+}
+
+.apt-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.apt-table th {
+    background-color: #f8f9fa;
+    color: #2b45a2;
+    text-align: left;
+    padding: 15px;
+    border-bottom: 2px solid #edf0f2;
+}
+
+.apt-table td {
+    padding: 14px 15px;
+    border-bottom: 1px solid #f1f1f1;
+    color: #444;
+}
+
+.apt-table tr:hover {
+    background-color: #f9fbff;
+}
+
+.empty-msg {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+}

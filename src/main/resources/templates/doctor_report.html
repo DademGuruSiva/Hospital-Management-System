@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Wise Report</title>
+    <link rel="stylesheet" th:href="@{/css/billstyle.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<div class="billing-container">
+    <div class="report-menu no-print">
+        <a th:href="@{/billingReport}" class="report-btn">Billing Report</a>
+        <a th:href="@{/doctorReport}" class="report-btn active">Doctor Report</a>
+        <a th:href="@{/patientReport}" class="report-btn">Patient Report</a>
+        <a th:href="@{/appointmentReport}" class="report-btn">Appointment Report</a>
+    </div>
+    <div class="no-print" style="margin-bottom: 15px;">
+    <a th:href="@{/}" class="btn-back">
+        <i class="fa-solid fa-house"></i> Back to Dashboard
+    </a>
+</div>
+
+    <div class="report-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2><i class="fa-solid fa-user-md"></i> Doctor-wise Revenue Report</h2>
+        <button onclick="window.print()" class="btn btn-add no-print" style="background: #e67e22;">
+            <i class="fa-solid fa-file-pdf"></i> Print Report
+        </button>
+    </div>
+
+    <div class="doctor-table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Doctor Name</th>
+                    <th>Total Contribution (₹)</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="entry : ${doctorRevenue}">
+                    <td class="doctor-name-cell" th:text="${entry.key}"></td>
+                    <td class="revenue-text" th:text="'₹ ' + ${#numbers.formatDecimal(entry.value, 1, 2)}"></td>
+                    <td><span class="badge-active">Verified</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

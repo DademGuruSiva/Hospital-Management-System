@@ -1,0 +1,101 @@
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/table.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Icons styling */
+        .action-icons a { color: inherit; text-decoration: none; margin: 0 5px; cursor: pointer; }
+        .edit-btn { color: #3498db; }
+        .edit-btn:hover { color: #2980b9; }
+        .delete-btn { color: #e74c3c; }
+        .delete-btn:hover { color: #c0392b; }
+        .print-btn { color: #2ecc71; }
+        .print-btn:hover { color: #27ae60; }
+        
+        /* Search Box Highlight */
+        .search-box input:focus { outline: none; border: 2px solid #3498db; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="page-title">Patient List</h2>
+
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search by Name or Patient ID...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+    </div>
+
+    <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <th>S.I</th>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>Phone</th>
+                    <th>Disease</th>
+                    <th>Admitted Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="p, iterStat : ${patients}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td class="bold-text patient-id-cell" th:text="${p.patientId}">PAT-2026-0001</td>
+                    <td class="patient-name-cell" th:text="${p.firstName + ' ' + p.lastName}">Name</td>
+                    <td th:text="${p.gender}">Male</td>
+                    <td th:text="${p.age}">22</td>
+                    <td th:text="${p.phone}">9182285618</td>
+                    <td th:text="${p.disease}">Fever</td>
+                    <td th:text="${#temporals.format(p.admittedDate, 'MMMM d, yyyy')}">Date</td>
+                    <td class="action-icons">
+                        <a th:href="@{/editPatient/{id}(id=${p.id})}" title="Edit">
+                            <i class="fas fa-edit edit-btn"></i>
+                        </a>
+
+                        <a th:href="@{/deletePatient/{id}(id=${p.id})}" 
+                           onclick="return confirm('Are you sure you want to delete this patient?')" title="Delete">
+                            <i class="fas fa-trash delete-btn"></i>
+                        </a>
+
+                        <i class="fas fa-print print-btn" onclick="window.print()" title="Print" style="cursor:pointer"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Improved Search Function: ID లేదా Name దేనితో వెతికినా పని చేస్తుంది
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        let filter = this.value.toUpperCase();
+        let rows = document.querySelector("table tbody").rows;
+        
+        for (let i = 0; i < rows.length; i++) {
+            let idCol = rows[i].cells[1].textContent.toUpperCase(); // Patient ID Column
+            let nameCol = rows[i].cells[2].textContent.toUpperCase(); // Name Column
+            
+            if (idCol.indexOf(filter) > -1 || nameCol.indexOf(filter) > -1) {
+                rows[i].style.display = "";
+            } else {
+                rows[i].style.display = "none";
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

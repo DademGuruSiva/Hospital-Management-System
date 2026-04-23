@@ -1,0 +1,80 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* Sidebar links styling to prevent underline and purple color */
+        .sidebar a {
+            text-decoration: none !important;
+            color: white !important;
+            display: inline-block;
+            width: 100%;
+        }
+        .menu-item {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <div class="menu-item">
+            <a th:href="@{/adminDashboard}">🏠 Dashboard</a>
+        </div>
+
+        <div class="menu-item" onclick="toggleMenu('patientMenu')">🧍 Patient</div>
+        <div id="patientMenu" class="submenu">
+            <a th:href="@{/addPatient}">Patient Registration</a>
+            <a th:href="@{/patientList}">Patient List</a> 
+        </div>
+
+        <div class="menu-item" onclick="toggleMenu('appointmentMenu')">📅 Appointment</div>
+        <div id="appointmentMenu" class="submenu">
+            <a th:href="@{/addAppointment}" class="btn-appointment">
+                <i class="fas fa-calendar-plus"></i> Quick Appointment
+            </a>
+            <a th:href="@{/normalAppointment}">Normal Appointment</a>
+            <a th:href="@{/appointmentList}">Appointment List</a>
+        </div>
+
+        <div class="menu-item" onclick="toggleMenu('doctorMenu')">👨‍⚕️ Doctor</div>
+        <div id="doctorMenu" class="submenu">
+            <a th:href="@{/addDoctor}">Add Doctor</a>
+            <a th:href="@{/doctorList}">Doctor List</a>
+        </div>
+
+        <div class="menu-item" onclick="toggleMenu('billingMenu')">💳 Billing</div>
+        <div id="billingMenu" class="submenu">
+            <a th:href="@{/consultationBill}">Consultation Bill</a>
+            <a th:href="@{/serviceOrder}">New Service Order</a>
+            <a th:href="@{/billingList}">Billing List</a>
+        </div>
+
+        <div class="menu-item" onclick="toggleMenu('reportMenu')">📊 Reports</div>
+        <div id="reportMenu" class="submenu">
+            <a th:href="@{/billingReport}">Billing Report</a>
+            <a th:href="@{/doctorReport}">Doctor Report</a>
+            <a th:href="@{/patientReport}">Patient Report</a>
+            <a th:href="@{/appointmentReport}">Appointment Report</a>
+        </div>
+
+        <div class="menu-item" onclick="toggleMenu('pharmacyMenu')">💊 Pharmacy</div>
+        <div id="pharmacyMenu" class="submenu">
+            <a th:href="@{/addMedicine}">Add Medicine</a>
+            <a th:href="@{/medicineList}">Medicine List</a>
+        </div>
+
+    </div>
+
+    <script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>

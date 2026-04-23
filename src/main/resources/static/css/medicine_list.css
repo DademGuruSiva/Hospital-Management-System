@@ -1,0 +1,71 @@
+/* Medicine List Table Styling */
+.list-container {
+    padding: 30px;
+    background: white;
+    margin: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #f0f4f8;
+    padding-bottom: 15px;
+}
+
+.list-header h2 {
+    color: #1a3c6d;
+    margin: 0;
+}
+
+.med-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: sans-serif;
+}
+
+.med-table thead tr {
+    background-color: #1a3c6d;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.med-table th, .med-table td {
+    padding: 15px 12px;
+    border-bottom: 1px solid #dddddd;
+}
+
+.med-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.med-table tbody tr:last-of-type {
+    border-bottom: 2px solid #1a3c6d;
+}
+
+/* Stock Status Badges */
+.stock-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.low-stock {
+    background-color: #ffe5e5;
+    color: #d9534f;
+}
+
+.in-stock {
+    background-color: #e5f9e5;
+    color: #28a745;
+}
+
+/* Action Buttons */
+.btn-edit { color: #007bff; cursor: pointer; margin-right: 10px; }
+.btn-delete { color: #dc3545; cursor: pointer; }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Registration | HMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/register.css}">
+</head>
+<body class="register-body">
+
+<div class="register-container">
+    <h2><i class="fa-solid fa-hospital-user"></i> Patient Sign Up</h2>
+    
+    <form th:action="@{/register}" th:object="${user}" method="post">
+        <div class="register-form-group">
+            <label>Username</label>
+            <input type="text" th:field="*{username}" class="register-input" required placeholder="Choose a username">
+        </div>
+        
+        <div class="register-form-group">
+            <label>Password</label>
+            <input type="password" th:field="*{password}" class="register-input" required placeholder="Create a password">
+        </div>
+        <form th:action="@{/saveUser}" th:object="${user}" method="post">
+   <input type="text" th:field="*{name}" /> 
+</form>
+        
+        <button type="submit" class="register-submit-btn">Register</button>
+    </form>
+    
+    <div class="register-login-link">
+        Already have an account? <a th:href="@{/login}">Login here</a>
+    </div>
+</div>
+
+</body>
+</html>

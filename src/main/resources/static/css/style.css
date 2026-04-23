@@ -1,0 +1,159 @@
+/* body {
+    margin: 0;
+    font-family: Arial;
+}
+
+Sidebar
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #0f1e4a;
+    padding: 10px;
+}
+
+Main Menu
+.menu-item {
+    color: white;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.menu-item:hover {
+    background: #1c2d6b;
+    border-radius: 5px;
+}
+
+Submenu
+.submenu {
+    display: none;
+    padding-left: 10px;
+}
+
+.submenu div {
+    background: #1c2d6b;
+    color: white;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.submenu div:hover {
+    background: #2d3f85;
+}
+
+Show class
+.show {
+    display: block;
+} */
+
+/* 
+body {
+    margin: 0;
+    font-family: Arial;
+}
+
+Sidebar
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #0f1e4a;
+    padding: 10px;
+}
+
+Main menu
+.menu-item {
+    color: white;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.menu-item:hover {
+    background: #1c2d6b;
+    border-radius: 5px;
+}
+
+Submenu
+.submenu {
+    display: none;
+}
+
+🔥 MAIN FIX HERE
+.submenu a {
+    display: block;            important
+    width: 100%;
+    text-decoration: none;
+    color: white;
+    background: #1c2d6b;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.submenu a:hover {
+    background: #2d3f85;
+}
+
+Show submenu
+.show {
+    display: block;
+} */
+
+
+body {
+    margin: 0;
+    font-family: Arial;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #0f1e4a;
+    padding: 10px;
+    overflow-y: auto;   
+}
+
+/* Main menu */
+.menu-item {
+    color: white;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    background: transparent;
+}
+
+.menu-item:hover {
+    background: #1a2c6b;
+}
+
+/* 🔥 IMPORTANT FIX: hide submenu by default */
+.submenu {
+    display: none;
+    padding-left: 10px;
+}
+
+/* Submenu items */
+.submenu a {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    color: white;
+    background: #2d3f85;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.submenu a:hover {
+    background: #3f52a3;
+}
+
+/* 🔥 Show only when clicked */
+.submenu.show {
+    display: block;
+}
