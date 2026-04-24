@@ -21,3 +21,25 @@ This is a **Full-Stack Web Application** developed to automate hospital workflow
 * Used **One-to-Many** mappings between Doctors and Appointments.
 * Implemented **RESTful Controllers** for seamless data communication.
 * Integrated **Hibernate** for database persistence and CRUD operations.
+
+
+## 📸 Project Screenshots
+
+Here is a visual walk-through of the system:
+
+<div align="center">
+  <table>
+    <tr>
+      <td><b>User Login</b><br><img src="./screenshots/login.jpg" width="400"></td>
+      <td><b>Admin Dashboard</b><br><img src="./screenshots/Admin.jpg" width="400"></td>
+    </tr>
+    <tr>
+      <td><b>Doctor Login</b><br><img src="./screenshots/Doctor_login.jpg" width="400"></td>
+      <td><b>Doctor Dashboard</b><br><img src="./screenshots/doctor_dashboard.jpg" width="400"></td>
+    </tr>
+    <tr>
+      <td><b>Patient Dashboard (Part 1)</b><br><img src="./screenshots/patient_dashboard.jpg" width="400"></td>
+      <td><b>Patient Dashboard (Part 2)</b><br><img src="./screenshots/patient_dashboard_2.jpg" width="400"></td>
+    </tr>
+  </table>
+</div>
