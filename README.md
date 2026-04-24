@@ -39,7 +39,7 @@ Here is a visual walk-through of the system:
     </tr>
     <tr>
       <td><b>Patient Dashboard (Part 1)</b><br><img src="./screenshots/patient_dashboard.jpg" width="400"></td>
-      <td><b>Patient Dashboard (Part 2)</b><br><img src="./screenshots/patient_dashboard_2.jpg" width="400"></td>
+      <td><b>Patient Dashboard (Part 2)</b><br><img src="./screenshots/patient_dashboard_1.jpg" width="400"></td>
     </tr>
   </table>
 </div>
